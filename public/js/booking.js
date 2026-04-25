@@ -2,301 +2,90 @@
 // Fresh Up Barbershop — Booking System
 // Flow: Location → Barber → CutApp (external)
 // ================================================================
+
+// ================================================================
 // SUPABASE CONFIG (replace placeholders when ready)
 // ================================================================
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';          // e.g. https://xyz.supabase.co
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // from Supabase project settings
+const SUPABASE_URL = 'https://Freshup.supabase.co';          // e.g. https://xyz.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnZmtwaWp0dG9vZXZtd3lhaXduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMjU2NzMsImV4cCI6MjA5MjcwMTY3M30.-rXZHLp2Qw73Yak_3hRH8ThuEqTIF7xr3mkHv7hQ10Y'; // from Supabase project settings
 
-// const SUPABASE_HEADERS = {
-//     'apikey': SUPABASE_ANON_KEY,
-//     'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-//     'Content-Type': 'application/json'
-// };
-
-// ================================================================
-// PLACEHOLDER DATA  (swap these out with Supabase calls later)
-// ================================================================
-
-const LOCATIONS = [
-    {
-        id: 1,
-        name: 'La Mesa',
-        address: '1234 Spring St, La Mesa, CA 91942',
-        phone: '(619) 555-0101',
-        hours: 'Mon–Sat 9am–7pm · Sun 10am–4pm'
-    },
-    {
-        id: 2,
-        name: 'Spring Valley',
-        address: '5678 Campo Rd, Spring Valley, CA 91977',
-        phone: '(619) 555-0202',
-        hours: 'Mon–Sat 9am–7pm · Sun 10am–4pm'
-    },
-    {
-        id: 3,
-        name: 'National City',
-        address: '9012 Harbor Dr, National City, CA 91950',
-        phone: '(619) 555-0303',
-        hours: 'Mon–Sat 9am–7pm · Sun Closed'
-    }
-];
-
-// 6 barbers per location — update photo paths and cutapp_url when ready
-const BARBERS = {
-    1: [ // La Mesa
-        {
-            id: 101,
-            name: 'Marcus Leon',
-            title: 'Master Barber',
-            experience: 8,
-            specialties: ['Skin Fades', 'Beard Sculpting', 'Hair Design'],
-            bio: 'Known for razor-sharp fades and clean lines. Marcus brings West Coast precision to every cut.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/marcus-leon'  // ← replace with real CutApp URL
-        },
-        {
-            id: 102,
-            name: 'Devon Shaw',
-            title: 'Senior Barber',
-            experience: 5,
-            specialties: ['Box Fades', 'Braiding', 'Lineups'],
-            bio: 'Devon turns heads with creative hair design and expert braid work.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/devon-shaw'
-        },
-        {
-            id: 103,
-            name: 'Jaylen Cruz',
-            title: 'Barber',
-            experience: 3,
-            specialties: ['Tapers', 'Textured Cuts', 'Kids Cuts'],
-            bio: 'Patient, precise, and great with clients of all ages.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/jaylen-cruz'
-        },
-        {
-            id: 104,
-            name: 'Tony Reeves',
-            title: 'Master Barber',
-            experience: 12,
-            specialties: ['Classic Cuts', 'Hot Towel Shave', 'Beard Trim'],
-            bio: 'Old-school craft meets modern style. Tonys been shaping San Diego since day one.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/tony-reeves'
-        },
-        {
-            id: 105,
-            name: 'Isaiah Webb',
-            title: 'Senior Barber',
-            experience: 6,
-            specialties: ['Burst Fades', 'Mohawks', 'Hair Color'],
-            bio: 'Isaiah pushes the boundaries of style with bold shapes and color work.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/isaiah-webb'
-        },
-        {
-            id: 106,
-            name: 'Carlos Vega',
-            title: 'Barber',
-            experience: 4,
-            specialties: ['Low Fades', 'Skin Tape', 'Afro Cuts'],
-            bio: 'Carlos brings versatility and energy to every chair session.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/carlos-vega'
-        }
-    ],
-    2: [ // Spring Valley
-        {
-            id: 201,
-            name: 'Darius King',
-            title: 'Master Barber',
-            experience: 10,
-            specialties: ['Skin Fades', 'Lineups', 'Beard Design'],
-            bio: 'Darius is the go-to in Spring Valley for precise fades and defined beards.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/darius-king'
-        },
-        {
-            id: 202,
-            name: 'Malik Jordan',
-            title: 'Senior Barber',
-            experience: 7,
-            specialties: ['Braiding', 'Twists', 'Natural Hair'],
-            bio: 'Malik specializes in natural styles, protective looks, and detailed braid work.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/malik-jordan'
-        },
-        {
-            id: 203,
-            name: 'Tre Williams',
-            title: 'Barber',
-            experience: 3,
-            specialties: ['Tapers', 'Kids Cuts', 'Shaggy Styles'],
-            bio: 'Fresh energy and a steady hand — Tre is building a reputation one great cut at a time.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/tre-williams'
-        },
-        {
-            id: 204,
-            name: 'Elijah Moore',
-            title: 'Master Barber',
-            experience: 9,
-            specialties: ['High Tops', 'Caesar Cuts', 'Waves'],
-            bio: 'Elijah brings old-school technique and modern flair to every session.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/elijah-moore'
-        },
-        {
-            id: 205,
-            name: 'Ray Santos',
-            title: 'Senior Barber',
-            experience: 5,
-            specialties: ['Drop Fades', 'Hair Design', 'Razor Art'],
-            bio: 'Rays razor art is legendary in the community — detail-obsessed and creative.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/ray-santos'
-        },
-        {
-            id: 206,
-            name: 'James Owens',
-            title: 'Barber',
-            experience: 2,
-            specialties: ['Skin Fades', 'Lineups', 'Beard Trim'],
-            bio: 'Up-and-coming barber with a hunger for perfection and an eye for clean edges.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/james-owens'
-        }
-    ],
-    3: [ // National City
-        {
-            id: 301,
-            name: 'Alex Romero',
-            title: 'Master Barber',
-            experience: 11,
-            specialties: ['Skin Fades', 'Classic Cuts', 'Hot Towel Shave'],
-            bio: 'Alex runs the National City chair with precision, consistency, and old-school respect.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/alex-romero'
-        },
-        {
-            id: 302,
-            name: 'Kevin Park',
-            title: 'Senior Barber',
-            experience: 6,
-            specialties: ['Textured Crops', 'Undercuts', 'Asian Hair'],
-            bio: 'Kevin excels at working with all hair types, bringing global technique to SD.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/kevin-park'
-        },
-        {
-            id: 303,
-            name: 'Omar Jackson',
-            title: 'Barber',
-            experience: 4,
-            specialties: ['Burst Fades', 'Braiding', 'Lineups'],
-            bio: 'Omar brings raw talent and a meticulous attention to every fade and lineup.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/omar-jackson'
-        },
-        {
-            id: 304,
-            name: 'Nate Rivera',
-            title: 'Master Barber',
-            experience: 8,
-            specialties: ['Tapers', 'Flat Tops', 'Beard Sculpting'],
-            bio: 'Nate brings structure and shape to every cut — a sculptor behind the chair.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/nate-rivera'
-        },
-        {
-            id: 305,
-            name: 'Chris Bell',
-            title: 'Senior Barber',
-            experience: 5,
-            specialties: ['Drop Fades', 'Waves', 'Design Work'],
-            bio: 'Chris is patient, detail-oriented, and always delivers above expectations.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/chris-bell'
-        },
-        {
-            id: 306,
-            name: 'Dana Brooks',
-            title: 'Barber',
-            experience: 3,
-            specialties: ['Kids Cuts', 'Tapers', 'Natural Styles'],
-            bio: 'Friendly, focused, and fearless with any hair type — Danas the real deal.',
-            photo: '../../backend/images/barbers/barber-placeholder.jpg',
-            cutapp_url: 'https://cutapp.com/barber/dana-brooks'
-        }
-    ]
+const SUPABASE_HEADERS = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json'
 };
 
-// ================================================================
-// SUPABASE FETCH HELPER (uncomment when Supabase is ready)
-// ================================================================
+// ── Supabase fetch helper ──────────────────────────────────
+async function sbFetch(table, query = '', method = 'GET', body = null) {
+    const url = `${SUPABASE_URL}/rest/v1/${table}${query}`;
+    const opts = { method, headers: SUPABASE_HEADERS };
+    if (body) opts.body = JSON.stringify(body);
 
-// async function sbFetch(table, params = '') {
-//     const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
-//         headers: SUPABASE_HEADERS
-//     });
-//     if (!res.ok) throw new Error(`Supabase error ${res.status}: ${await res.text()}`);
-//     return res.json();
-// }
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`Supabase ${method} failed: ${res.status}`);
+    return res.json();
+}
 
 // ================================================================
 // STATE
 // ================================================================
 
 const bookingState = {
+    step: 1,
     location: null,
-    barber: null,
-    step: 1
+    barber: null
 };
 
 // ================================================================
-// INIT
+// PROGRESS BAR
 // ================================================================
 
-document.addEventListener('DOMContentLoaded', function () {
-    renderProgressBar(1);
-    renderLocationStep();
-});
-
-// ================================================================
-// STEP PROGRESS BAR
-// ================================================================
-
-function renderProgressBar(activeStep) {
-    const steps = [
-        { num: 1, label: 'Location' },
-        { num: 2, label: 'Barber' }
-    ];
-
-    const container = document.getElementById('stepProgress');
-    if (!container) return;
-
-    container.innerHTML = steps.map((s, i) => `
-        <div class="sp-group">
-            <div class="sp-dot ${s.num < activeStep ? 'completed' : s.num === activeStep ? 'active' : ''}">
-                ${s.num < activeStep ? '✓' : s.num}
-            </div>
-            <span class="sp-label ${s.num === activeStep ? 'active' : ''}">${s.label}</span>
+function renderProgressBar(step) {
+    const bar = document.getElementById('bookingProgress');
+    if (!bar) return;
+    bar.innerHTML = `
+        <div class="progress-step ${step >= 1 ? 'active' : ''}">
+            <div class="progress-circle">1</div>
+            <div class="progress-label">Location</div>
         </div>
-        ${i < steps.length - 1 ? `<div class="sp-line ${activeStep > s.num ? 'done' : ''}"></div>` : ''}
-    `).join('');
+        <div class="progress-line ${step >= 2 ? 'active' : ''}"></div>
+        <div class="progress-step ${step >= 2 ? 'active' : ''}">
+            <div class="progress-circle">2</div>
+            <div class="progress-label">Barber</div>
+        </div>
+    `;
 }
 
 // ================================================================
 // STEP 1 — LOCATION
 // ================================================================
 
-function renderLocationStep() {
-    // ── SUPABASE SWAP ──────────────────────────────────────────
-    // Replace the LOCATIONS array call below with:
-    //
-    // const locations = await sbFetch('locations', '?is_active=eq.true&order=id.asc');
-    // Then map `locations` instead of `LOCATIONS`
-    // ──────────────────────────────────────────────────────────
+async function renderLocationStep() {
+    bookingState.step = 1;
+    renderProgressBar(1);
+
+    const locations = await sbFetch('locations', '?active=eq.true&order=name.asc');
+    const content = document.getElementById('bookingContent');
+
+    content.innerHTML = `
+        <div class="step-wrap" id="locationStep">
+            ...
+            <div class="loc-grid">
+                ${locations.map((loc, i) => `
+                    ...
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    content.querySelectorAll('.loc-card').forEach(card => {
+        card.addEventListener('click', function () {
+            const id = this.dataset.id;
+            const loc = locations.find(l => l.id === id);
+            selectLocation(loc);
+        });
+    });
+}
 
     bookingState.step = 1;
     renderProgressBar(1);
@@ -306,12 +95,12 @@ function renderLocationStep() {
         <div class="step-wrap" id="locationStep">
             <div class="step-head">
                 <div class="step-eyebrow">STEP 01</div>
-                <h2 class="step-title">Choose Your <span>Location</span></h2>
-                <p class="step-sub">Pick the shop closest to you and let's get started.</p>
+                <h2 class="step-title">Select Your <span>Location</span></h2>
+                <p class="step-sub">Pick the Fresh Up location closest to you.</p>
             </div>
             <div class="loc-grid">
                 ${LOCATIONS.map((loc, i) => `
-                    <button class="loc-card" data-id="${loc.id}" style="animation-delay:${i * 0.08}s">
+                    <button class="loc-card" data-id="${loc.id}" style="animation-delay:${i * 0.1}s">
                         <div class="loc-card-inner">
                             <div class="loc-num">0${i + 1}</div>
                             <div class="loc-pin-icon">
@@ -344,7 +133,6 @@ function renderLocationStep() {
             selectLocation(loc);
         });
     });
-}
 
 function selectLocation(loc) {
     bookingState.location = loc;
@@ -355,16 +143,30 @@ function selectLocation(loc) {
 // STEP 2 — BARBER
 // ================================================================
 
-function renderBarberStep() {
-    // ── SUPABASE SWAP ──────────────────────────────────────────
-    // Replace the BARBERS[locationId] lookup below with:
-    //
-    // const barbers = await sbFetch(
-    //     'barbers',
-    //     `?location_id=eq.${bookingState.location.id}&is_active=eq.true&order=display_order.asc`
-    // );
-    // Then map `barbers` instead of `locationBarbers`
-    // ──────────────────────────────────────────────────────────
+async function renderBarberStep() {
+    bookingState.step = 2;
+    renderProgressBar(2);
+
+    const barbers = await sbFetch(
+        'barbers',
+        `?location_id=eq.${bookingState.location.id}&active=eq.true&order=display_order.asc`
+    );
+
+    const content = document.getElementById('bookingContent');
+    content.innerHTML = `
+        <div class="step-wrap" id="barberStep">
+            ...
+            <div class="barber-grid">
+                ${barbers.map((b, i) => `
+                    ...
+                    photo: b.photo_url,
+                    cutapp_url: b.cutapp_url
+                    ...
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
 
     bookingState.step = 2;
     renderProgressBar(2);
@@ -439,7 +241,6 @@ function renderBarberStep() {
             openCutApp(url, name);
         });
     });
-}
 
 // ================================================================
 // REDIRECT TO CUTAPP
@@ -449,15 +250,18 @@ function openCutApp(url, barberName) {
     // ── SUPABASE SWAP ──────────────────────────────────────────
     // Optionally log the booking intent to Supabase before redirect:
     //
-    // await sbFetch('booking_clicks', '') POST with:
-    //   { barber_name: barberName, location_id: bookingState.location.id, ts: new Date() }
+    // await sbFetch('booking_clicks', '', 'POST', {
+    //     barber_name: barberName,
+    //     location_id: bookingState.location.id,
+    //     clicked_at: new Date().toISOString()
+    // });
     // ──────────────────────────────────────────────────────────
 
     if (url && url !== '#') {
         showToast(`Redirecting you to book with ${barberName}...`, 'success');
         setTimeout(() => window.open(url, '_blank'), 800);
     } else {
-        showToast(`CutApp link coming soon for ${barberName}.`, 'info');
+        showToast(`Booking link coming soon for ${barberName}.`, 'info');
     }
 }
 
@@ -495,5 +299,13 @@ function showToast(message, type = 'success') {
         setTimeout(() => toast.remove(), 400);
     }, 3500);
 }
+
+// ================================================================
+// BOOT
+// ================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderLocationStep();
+});
 
 console.log('✂️ Fresh Up booking.js loaded');
