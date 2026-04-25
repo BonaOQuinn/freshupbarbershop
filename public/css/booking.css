@@ -1,34 +1,28 @@
-/* ================================================================
-   Fresh Up Barbershop — Booking Page Styles
-   Matches: warm dark (#141010), amber accent (#F4A261)
-   Fonts: Playfair Display · Lobster · Inter
-   ================================================================ */
+/* ============================================================
+   BOOKING PAGE STYLES
+   Matches the booking.js structure
+   ============================================================ */
 
-/* ── Override body for booking page ── */
-body.booking-page {
-    background: url('../../backend/images/freshup_collage.png') center center / cover no-repeat fixed;
-}
-
-/* ── Booking Layout ── */
-.booking-container {
+/* ── Page wrapper ── */
+.booking-main {
     position: relative;
-    min-height: 100vh;
-    padding: 130px 3rem 80px;
     z-index: 1;
-}
-
-.booking-content-wrap {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 7rem 2rem 4rem;
+    min-height: 100vh;
 }
 
-/* ── Step Progress Bar ── */
-.step-progress {
+/* ── Progress bar ── */
+#stepProgress {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0;
-    margin-bottom: 3.5rem;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .sp-group {
@@ -39,42 +33,42 @@ body.booking-page {
 }
 
 .sp-dot {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 2px solid rgba(244, 162, 97, 0.3);
-    background: rgba(20, 10, 5, 0.6);
+    background: var(--bg-card);
+    border: 2px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
     font-weight: 700;
-    font-size: 0.9rem;
-    color: rgba(241, 237, 229, 0.35);
-    transition: all 0.4s ease;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: all 0.3s;
 }
 
 .sp-dot.active {
     background: var(--yellow);
     border-color: var(--yellow);
-    color: #141010;
-    box-shadow: 0 0 24px rgba(244, 162, 97, 0.5);
+    color: #1a0e08;
+    box-shadow: 0 0 20px rgba(244, 162, 97, 0.4);
 }
 
 .sp-dot.completed {
-    background: rgba(244, 162, 97, 0.18);
+    background: var(--yellow-dim);
     border-color: var(--yellow);
     color: var(--yellow);
 }
 
 .sp-label {
-    font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(241, 237, 229, 0.35);
-    transition: color 0.4s;
+    color: var(--text-muted);
+    transition: color 0.3s;
 }
 
 .sp-label.active {
@@ -82,28 +76,26 @@ body.booking-page {
 }
 
 .sp-line {
-    width: 80px;
+    width: 60px;
     height: 2px;
-    background: rgba(244, 162, 97, 0.18);
-    margin: 0 0.5rem;
-    margin-bottom: 1.3rem;
-    transition: background 0.4s;
-    flex-shrink: 0;
+    background: var(--border);
+    margin-top: -1.5rem;
+    transition: background 0.3s;
 }
 
 .sp-line.done {
     background: var(--yellow);
 }
 
-/* ── Step Wrapper (shared) ── */
+/* ── Step wrapper ── */
 .step-wrap {
-    animation: stepFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: fadeIn 0.4s ease;
 }
 
-@keyframes stepFadeUp {
+@keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(28px);
+        transform: translateY(12px);
     }
 
     to {
@@ -112,32 +104,28 @@ body.booking-page {
     }
 }
 
-/* ── Step Header ── */
 .step-head {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
     position: relative;
 }
 
 .step-eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--yellow);
-    margin-bottom: 0.5rem;
-    opacity: 0.75;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
 }
 
 .step-title {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(2.2rem, 4vw, 3rem);
     font-weight: 900;
-    color: #F1EDE5;
-    margin-bottom: 0.6rem;
-    line-height: 1.1;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--white);
+    margin-bottom: 0.5rem;
 }
 
 .step-title span {
@@ -145,135 +133,127 @@ body.booking-page {
 }
 
 .step-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.88rem;
-    color: var(--text-muted, #C4BAB0);
+    color: var(--text-muted);
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
 }
 
-.step-sub svg {
-    color: var(--yellow);
-    flex-shrink: 0;
-}
-
-/* ── Back Button ── */
+/* ── Back button ── */
 .back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    background: transparent;
-    border: 1px solid rgba(244, 162, 97, 0.3);
-    color: var(--yellow);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 0.55rem 1.2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    margin-bottom: 1.5rem;
+    gap: 0.5rem;
 }
 
 .back-btn:hover {
-    background: rgba(244, 162, 97, 0.1);
-    border-color: var(--yellow);
-    transform: translateX(-3px);
+    color: var(--yellow);
+    border-color: var(--yellow-dark);
+    transform: translateX(-2px);
 }
 
-/* ================================================================
-   LOCATION STEP
-   ================================================================ */
-
+/* ── Location grid ── */
 .loc-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .loc-card {
-    background: rgba(20, 10, 5, 0.55);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(244, 162, 97, 0.18);
-    border-radius: 14px;
-    padding: 0;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    text-align: left;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    overflow: hidden;
-    animation: stepFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.loc-card:hover {
-    border-color: var(--yellow);
-    box-shadow: 0 16px 50px rgba(244, 162, 97, 0.22);
-    transform: translateY(-6px);
+    padding: 0;
+    display: block;
+    width: 100%;
 }
 
 .loc-card-inner {
-    padding: 2.2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.loc-card:hover .loc-card-inner {
+    transform: translateY(-4px);
+    border-color: var(--yellow-dark);
+    box-shadow: 0 12px 35px rgba(244, 162, 97, 0.15);
 }
 
 .loc-num {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    font-weight: 900;
     font-style: italic;
-    color: rgba(244, 162, 97, 0.12);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--blue-dim);
     line-height: 1;
-    margin-bottom: -0.5rem;
-    letter-spacing: -0.02em;
+    opacity: 0.3;
 }
 
 .loc-pin-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
+    border: 1px solid var(--yellow-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--yellow);
-    margin-bottom: 0.5rem;
 }
 
 .loc-name {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 1.8rem;
     font-weight: 900;
-    color: #F1EDE5;
-    margin-bottom: 0.2rem;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
 }
 
-.loc-addr {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.83rem;
-    color: #C4BAB0;
-    line-height: 1.5;
-}
-
+.loc-addr,
 .loc-hours {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    color: rgba(196, 186, 176, 0.65);
-    margin-top: 0.2rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
 }
 
 .loc-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1.4rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    margin-top: 1.2rem;
     color: var(--yellow);
-    border-top: 1px solid rgba(244, 162, 97, 0.15);
-    padding-top: 1.2rem;
-    width: 100%;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     transition: gap 0.2s;
 }
 
@@ -281,41 +261,48 @@ body.booking-page {
     gap: 0.8rem;
 }
 
-/* ================================================================
-   BARBER STEP
-   ================================================================ */
-
+/* ── Barber grid ── */
 .barber-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .barber-card {
-    background: rgba(18, 10, 5, 0.65);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(244, 162, 97, 0.18);
-    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    animation: stepFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
 }
 
 .barber-card:hover {
-    border-color: var(--yellow);
-    box-shadow: 0 16px 50px rgba(244, 162, 97, 0.2);
-    transform: translateY(-6px);
+    transform: translateY(-4px);
+    border-color: var(--yellow-dark);
+    box-shadow: 0 12px 35px rgba(244, 162, 97, 0.15);
 }
 
-/* Photo */
 .barber-photo-wrap {
     position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1;
     overflow: hidden;
-    background: #1a1008;
+    background: var(--bg);
 }
 
 .barber-photo {
@@ -323,192 +310,156 @@ body.booking-page {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.barber-card:hover .barber-photo {
-    transform: scale(1.06);
 }
 
 .barber-photo-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 40%, rgba(14, 8, 3, 0.85) 100%);
+    background: linear-gradient(to top, rgba(20, 16, 16, 0.8) 0%, transparent 50%);
     pointer-events: none;
 }
 
 .barber-exp-badge {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
+    bottom: 0.8rem;
+    right: 0.8rem;
     background: var(--yellow);
-    color: #141010;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.68rem;
+    color: #1a0e08;
+    font-size: 0.7rem;
     font-weight: 800;
-    letter-spacing: 0.1em;
-    padding: 0.28rem 0.65rem;
-    border-radius: 20px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    z-index: 2;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Info */
 .barber-body {
-    padding: 1.4rem 1.4rem 0.8rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    padding: 1.3rem 1.2rem;
 }
 
 .barber-title-tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--yellow);
-    opacity: 0.8;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
 }
 
 .barber-name {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 1.35rem;
     font-weight: 900;
-    color: #F1EDE5;
-    margin: 0;
-    line-height: 1.2;
+    font-size: 1.3rem;
+    color: var(--white);
+    margin-bottom: 0.6rem;
 }
 
 .barber-bio {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.81rem;
-    color: #C4BAB0;
+    color: var(--text-muted);
+    font-size: 0.88rem;
     line-height: 1.6;
-    margin: 0;
-    flex-grow: 1;
+    margin-bottom: 0.9rem;
 }
 
 .barber-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin-top: 0.4rem;
+    margin-bottom: 1rem;
 }
 
 .barber-tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.71rem;
-    font-weight: 600;
+    background: var(--yellow-dim);
+    border: 1px solid var(--yellow-dark);
     color: var(--yellow);
-    background: rgba(244, 162, 97, 0.1);
-    border: 1px solid rgba(244, 162, 97, 0.22);
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
-    letter-spacing: 0.02em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 12px;
 }
 
-/* Book Button */
 .book-barber-btn {
+    width: 100%;
+    background: var(--yellow);
+    color: #0d1a26;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    background: var(--yellow);
-    color: #141010;
-    border: none;
-    padding: 1rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    flex-shrink: 0;
+    gap: 0.5rem;
 }
 
 .book-barber-btn:hover {
-    background: #ffe085;
-    box-shadow: 0 -6px 24px rgba(244, 162, 97, 0.3);
+    background: #ffe066;
+    box-shadow: 0 4px 16px rgba(245, 200, 66, 0.3);
+    gap: 0.75rem;
 }
 
-.book-barber-btn svg {
-    transition: transform 0.2s;
-    flex-shrink: 0;
-}
-
-.book-barber-btn:hover svg {
-    transform: translateX(3px);
-}
-
-/* ================================================================
-   TOAST NOTIFICATIONS
-   ================================================================ */
-
+/* ── Toast notifications ── */
 .fu-toast {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    padding: 0.9rem 1.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 1rem 1.5rem;
     border-radius: 8px;
-    border: 1px solid;
-    z-index: 9999;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    transform: translateY(100px);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    max-width: 340px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    max-width: 350px;
 }
 
 .fu-toast--show {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
 }
 
 .fu-toast--success {
-    background: rgba(244, 162, 97, 0.12);
-    border-color: rgba(244, 162, 97, 0.35);
-    color: var(--yellow);
+    border-color: var(--yellow);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(244, 162, 97, 0.05) 100%);
 }
 
 .fu-toast--info {
-    background: rgba(196, 186, 176, 0.1);
-    border-color: rgba(196, 186, 176, 0.3);
-    color: #C4BAB0;
+    border-color: var(--blue);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(196, 186, 176, 0.05) 100%);
 }
 
-.fu-toast--error {
-    background: rgba(220, 80, 80, 0.1);
-    border-color: rgba(220, 80, 80, 0.3);
-    color: #f87171;
-}
-
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-
-@media (max-width: 1024px) {
-    .loc-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .barber-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
+/* ── Responsive ── */
 @media (max-width: 768px) {
-    .booking-container {
-        padding: 110px 1.2rem 60px;
+    .booking-main {
+        padding: 6rem 1.2rem 3rem;
     }
 
-    .loc-grid,
+    .back-btn {
+        position: static;
+        margin-bottom: 1.5rem;
+    }
+
+    .step-head {
+        margin-top: 1rem;
+    }
+
+    .loc-grid {
+        grid-template-columns: 1fr;
+    }
+
     .barber-grid {
         grid-template-columns: 1fr;
     }
@@ -517,13 +468,25 @@ body.booking-page {
         width: 40px;
     }
 
-    .step-title {
-        font-size: 1.9rem;
+    .sp-label {
+        font-size: 0.65rem;
+    }
+
+    .fu-toast {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .sp-line {
-        width: 24px;
+    .sp-label {
+        display: none;
+    }
+
+    .sp-dot {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
     }
 }

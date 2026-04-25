@@ -6,7 +6,7 @@
 // ================================================================
 // SUPABASE CONFIG
 // ================================================================
-const SUPABASE_URL     = 'https://Freshup.supabase.co';
+const SUPABASE_URL = 'https://bgfkpijttooevmwyaiwn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnZmtwaWp0dG9vZXZtd3lhaXduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMjU2NzMsImV4cCI6MjA5MjcwMTY3M30.-rXZHLp2Qw73Yak_3hRH8ThuEqTIF7xr3mkHv7hQ10Y';
 
 const SUPABASE_HEADERS = {
