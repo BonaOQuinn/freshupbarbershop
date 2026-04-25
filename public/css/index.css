@@ -33,17 +33,9 @@ body {
     font-family: 'Inter', sans-serif;
     color: var(--text);
     overflow-x: hidden;
-    background: url('../../backend/images/freshup_collage.png') center center / cover no-repeat fixed;
+    background: url('../images/freshup_collage.png') center center / cover no-repeat fixed;
 }
 
-/* ── Full-screen dark overlay ── */
-.grid-background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: rgba(20, 10, 5, 0.75);
-}
 
 /* ── Header ── */
 #mainHeader {
