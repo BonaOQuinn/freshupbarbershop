@@ -12,6 +12,26 @@
         href="https://fonts.googleapis.com/css2?family=Lobster&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
+
+    <style>
+        /* ── About section animation setup ── */
+        .about-text,
+        .about-pillars,
+        .pillar-item,
+        .about-stat {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .about-text.in-view,
+        .about-pillars.in-view,
+        .pillar-item.in-view,
+        .about-stat.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
 <body>
@@ -285,9 +305,11 @@
     <footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="footer-logo-text">Fresh Up</div>
+                <img src="images/freshup.png" alt="Fresh Up Barbershop Logo"
+                    style="max-width: 520px; width: 90%; display: block; margin: 0 auto;">
                 <p class="footer-tagline">Premium barbershop experience in San Diego. Where style meets precision.</p>
-                <a href="#" class="footer-social-link">
+                <a href="https://www.instagram.com/freshupbarbershop/" target="_blank" rel="noopener noreferrer"
+                    class="footer-social-link">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="2" width="20" height="20" rx="5" />
                         <circle cx="12" cy="12" r="5" />
@@ -354,6 +376,36 @@
         document.getElementById('reviewPrev').onclick = function () { goReview(reviewCurrent - 1); };
         document.getElementById('reviewNext').onclick = function () { goReview(reviewCurrent + 1); };
         setInterval(function () { goReview(reviewCurrent + 1); }, 5000);
+
+        // About section scroll animations
+        (function () {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            // Observe the two main columns
+            var aboutText = document.querySelector('.about-text');
+            var aboutPillars = document.querySelector('.about-pillars');
+            if (aboutText) observer.observe(aboutText);
+            if (aboutPillars) observer.observe(aboutPillars);
+
+            // Stagger the pillar items
+            document.querySelectorAll('.pillar-item').forEach(function (el, i) {
+                el.style.transitionDelay = (i * 0.12) + 's';
+                observer.observe(el);
+            });
+
+            // Stagger the stat numbers
+            document.querySelectorAll('.about-stat').forEach(function (el, i) {
+                el.style.transitionDelay = (i * 0.1) + 's';
+                observer.observe(el);
+            });
+        })();
     </script>
 
 </body>
