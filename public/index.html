@@ -12,26 +12,6 @@
         href="https://fonts.googleapis.com/css2?family=Lobster&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
-
-    <style>
-        /* ── About section animation setup ── */
-        .about-text,
-        .about-pillars,
-        .pillar-item,
-        .about-stat {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .about-text.in-view,
-        .about-pillars.in-view,
-        .pillar-item.in-view,
-        .about-stat.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
 </head>
 
 <body>
@@ -66,6 +46,8 @@
     <!-- ==================== ABOUT ==================== -->
     <section class="about-section" id="about">
         <div class="about-inner">
+
+            <!-- LEFT: text & stats -->
             <div class="about-text">
                 <div class="section-label">OUR STORY</div>
                 <h2 class="about-title">Stay Fresh</h2>
@@ -93,65 +75,16 @@
                             Locations</span></div>
                 </div>
             </div>
-            <div class="about-pillars">
-                <div class="pillar-item">
-                    <div class="feature-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="6" cy="6" r="3" />
-                            <circle cx="6" cy="18" r="3" />
-                            <line x1="20" y1="4" x2="8.12" y2="15.88" />
-                            <line x1="14.47" y1="14.48" x2="20" y2="20" />
-                            <line x1="8.12" y1="8.12" x2="12" y2="12" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="pillar-name">Skilled Barbers</h3>
-                        <p class="pillar-desc">Celebrity-trusted cuts perfected over years of dedicated craft.</p>
-                    </div>
-                </div>
-                <div class="pillar-item">
-                    <div class="feature-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="pillar-name">Premium Products</h3>
-                        <p class="pillar-desc">Only the finest grooming products used on every client, every time.</p>
-                    </div>
-                </div>
-                <div class="pillar-item">
-                    <div class="feature-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polygon
-                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="pillar-name">Luxury Atmosphere</h3>
-                        <p class="pillar-desc">A welcoming space where clients become friends and every visit feels
-                            special.</p>
-                    </div>
-                </div>
-                <div class="pillar-item">
-                    <div class="feature-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="12" y1="8" x2="12" y2="12" />
-                            <line x1="12" y1="16" x2="12.01" y2="16" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="pillar-name">Built on Dedication</h3>
-                        <p class="pillar-desc">No shortcuts. Every client leaves looking their absolute best.</p>
-                    </div>
+
+            <!-- RIGHT: video showcase -->
+            <div class="about-video-wrap">
+                <div class="about-video-frame">
+                    <video class="about-video" src="videos/freshup-promo.mp4" autoplay muted loop playsinline
+                        preload="auto"></video>
+                    <div class="video-corner-br"></div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -228,7 +161,7 @@
         <h2 class="section-title">What Our Clients Say</h2>
         <div class="gold-divider"></div>
         <div class="google-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="#F5C842">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#1A90D9">
                 <polygon
                     points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
@@ -298,18 +231,16 @@
     <section class="section cta-section">
         <h2 class="cta-title">Ready to Get Fresh?</h2>
         <p class="cta-desc">Book your appointment today and experience the Fresh Up difference.</p>
-        <a href="#" class="cta-main-btn">Book Your Appointment</a>
+        <a href="booking.html" class="cta-main-btn">Book Your Appointment</a>
     </section>
 
     <!-- ==================== FOOTER ==================== -->
     <footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <img src="images/freshup.png" alt="Fresh Up Barbershop Logo"
-                    style="max-width: 520px; width: 90%; display: block; margin: 0 auto;">
+                <div class="footer-logo-text">Fresh Up</div>
                 <p class="footer-tagline">Premium barbershop experience in San Diego. Where style meets precision.</p>
-                <a href="https://www.instagram.com/freshupbarbershop/" target="_blank" rel="noopener noreferrer"
-                    class="footer-social-link">
+                <a href="#" class="footer-social-link">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="2" width="20" height="20" rx="5" />
                         <circle cx="12" cy="12" r="5" />
@@ -357,56 +288,7 @@
     </footer>
 
     <!-- ==================== SCRIPTS ==================== -->
-    <script>
-        // Header scroll
-        (function () {
-            var h = document.getElementById('mainHeader');
-            function u() { h.classList[window.pageYOffset > 10 ? 'add' : 'remove']('scrolled'); }
-            window.addEventListener('scroll', u); u();
-        })();
-
-        // Reviews carousel
-        var reviewCurrent = 0;
-        var reviewTotal = 3;
-        function goReview(n) {
-            reviewCurrent = (n + reviewTotal) % reviewTotal;
-            document.getElementById('reviewsTrack').style.transform = 'translateX(-' + (reviewCurrent * 100) + '%)';
-            document.querySelectorAll('.reviews-dot').forEach(function (d, i) { d.classList.toggle('active', i === reviewCurrent); });
-        }
-        document.getElementById('reviewPrev').onclick = function () { goReview(reviewCurrent - 1); };
-        document.getElementById('reviewNext').onclick = function () { goReview(reviewCurrent + 1); };
-        setInterval(function () { goReview(reviewCurrent + 1); }, 5000);
-
-        // About section scroll animations
-        (function () {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
-
-            // Observe the two main columns
-            var aboutText = document.querySelector('.about-text');
-            var aboutPillars = document.querySelector('.about-pillars');
-            if (aboutText) observer.observe(aboutText);
-            if (aboutPillars) observer.observe(aboutPillars);
-
-            // Stagger the pillar items
-            document.querySelectorAll('.pillar-item').forEach(function (el, i) {
-                el.style.transitionDelay = (i * 0.12) + 's';
-                observer.observe(el);
-            });
-
-            // Stagger the stat numbers
-            document.querySelectorAll('.about-stat').forEach(function (el, i) {
-                el.style.transitionDelay = (i * 0.1) + 's';
-                observer.observe(el);
-            });
-        })();
-    </script>
+    <script src="js/index.js"></script>
 
 </body>
 
